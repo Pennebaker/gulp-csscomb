@@ -68,7 +68,7 @@ function Plugin(configPath, options) {
             filename: file.path
           });
         output.then(function (o) {
-          file.contents = new Buffer(0);
+          file.contents = new Buffer(o);
         })
       } catch (err) {
         this.emit('error', new PluginError(PLUGIN_NAME, file.path + '\n' + err));

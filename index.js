@@ -67,18 +67,17 @@ function Plugin(configPath, options) {
             syntax: syntax,
             filename: file.path
           });
-        output.then(function (o) {
+        output.then(o => {
           file.contents = new Buffer(o);
+          // make sure the file goes through the next gulp plugin
+          this.push(file);
+          // tell the stream engine that we are done with this file
+          return cb();
         })
       } catch (err) {
         this.emit('error', new PluginError(PLUGIN_NAME, file.path + '\n' + err));
       }
     }
-
-    // make sure the file goes through the next gulp plugin
-    this.push(file);
-    // tell the stream engine that we are done with this file
-    return cb();
   });
 
   // Return the file stream
